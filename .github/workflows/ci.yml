@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate-static-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required files
+        run: |
+          test -f index.html
+          test -f styles.css
+
+      - name: Basic content checks
+        run: |
+          grep -q "<html" index.html
+          grep -q "Workstories" index.html
+          grep -q -- "--wine" styles.css
